@@ -16,6 +16,6 @@ def train_test():
     gpus=config["AVAIL_GPUS"],
     logger=logger,
     callbacks=callbacks,
-)
+    )
     trainer.fit(model=model, datamodule=datamodule)
     trainer.test(model=model, datamodule=datamodule)
