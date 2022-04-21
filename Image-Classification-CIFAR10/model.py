@@ -6,7 +6,7 @@ from torch.optim.swa_utils import AveragedModel, update_bn
 from torchmetrics.functional import accuracy, confusion_matrix
 from torchvision.models import resnet18
 import torch
-from main import BATCH_SIZE
+from hparams import BATCH_SIZE
 
 def create_model():
     model = resnet18(pretrained=False, num_classes=10)

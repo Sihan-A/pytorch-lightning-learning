@@ -4,14 +4,7 @@ from utils import load_callbacks_logger
 from data import CIFAR10DataModule
 from model import LitResnet
 from pytorch_lightning import seed_everything
-import torch
-import os
-
-RANDOM_SEED = 42
-AVAIL_GPUS = min(1, torch.cuda.device_count())
-BATCH_SIZE = 256 if AVAIL_GPUS else 64
-NUM_WORKERS = int(os.cpu_count() / 2)
-LEARNING_RATE = 0.05
+from hparams import RANDOM_SEED, LEARNING_RATE, BATCH_SIZE, AVAIL_GPUS
 
 def train_test():
     seed_everything(RANDOM_SEED)
