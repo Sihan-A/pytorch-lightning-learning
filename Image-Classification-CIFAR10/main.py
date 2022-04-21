@@ -12,10 +12,10 @@ def train_test():
     datamodule = CIFAR10DataModule(data_dir="./", batch_size=config["BATCH_SIZE"])
     callbacks, logger = load_callbacks_logger()
     trainer = Trainer(
-    max_epochs=100,
-    gpus=config["AVAIL_GPUS"],
-    logger=logger,
-    callbacks=callbacks,
+        max_epochs=100,
+        gpus=config["AVAIL_GPUS"],
+        logger=logger,
+        callbacks=callbacks,
     )
     trainer.fit(model=model, datamodule=datamodule)
     trainer.test(model=model, datamodule=datamodule)
