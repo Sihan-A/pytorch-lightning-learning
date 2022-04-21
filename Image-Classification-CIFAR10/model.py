@@ -6,7 +6,7 @@ from torch.optim.swa_utils import AveragedModel, update_bn
 from torchmetrics.functional import accuracy, confusion_matrix
 from torchvision.models import resnet18
 import torch
-from hparams import BATCH_SIZE
+from hparams import config
 
 def create_model():
     model = resnet18(pretrained=False, num_classes=10)
@@ -62,7 +62,7 @@ class LitResnet(LightningModule):
     def configure_optimizers(self):
         optimizer = torch.optim.SGD(
             self.parameters(), lr=self.hparams.lr, momentum=0.9, weight_decay=5e-4,)
-        steps_per_epoch = 45000//BATCH_SIZE
+        steps_per_epoch = 45000//config["BATCH_SIZE"]
         scheduler_dict = {
             "scheduler": OneCycleLR(
                 optimizer=optimizer, max_lr=0.1,

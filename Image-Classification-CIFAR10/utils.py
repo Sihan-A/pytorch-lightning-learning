@@ -2,6 +2,7 @@ from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from pytorch_lightning.callbacks.progress import TQDMProgressBar
 from pytorch_lightning.loggers import TensorBoardLogger
+from hparams import config
 
 class LitProgressBar(TQDMProgressBar):
     def init_validation_tqdm(self):
@@ -10,7 +11,7 @@ class LitProgressBar(TQDMProgressBar):
         return bar
 
 def load_callbacks_logger():
-    early_stopping = EarlyStopping(monitor="val_loss", patience=10, mode="min")
+    early_stopping = EarlyStopping(monitor="val_loss", patience=config["EarlyStoppingPatience"], mode="min")
     lr_monitor = LearningRateMonitor(logging_interval="step")
     checkpoint_callback = ModelCheckpoint(
         monitor='val_loss',
