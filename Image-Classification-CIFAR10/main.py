@@ -6,14 +6,23 @@ from model import LitResnet
 from pytorch_lightning import seed_everything
 from hparams import config
 
-def train_test():
-    seed_everything(config["RANDOM_SEED"])
-    model = LitResnet(lr=config["LEARNING_RATE"])
-    datamodule = CIFAR10DataModule(data_dir="./", batch_size=config["BATCH_SIZE"])
+import hydra
+from omegaconf import DictConfig, OmegaConf
+
+
+@hydra.main(config_path='config', config_name='default')
+def train_test(cfg: DictConfig):
+    seed_everything(cfg.seed)
+    
+    model = LitResnet(lr=cfg.model.lr)
+    datamodule = CIFAR10DataModule(
+        data_dir="./",
+        batch_size=config["BATCH_SIZE"],
+    )
     callbacks, logger = load_callbacks_logger()
     trainer = Trainer(
         max_epochs=100,
-        gpus=config["AVAIL_GPUS"],
+        gpus=cfg.train.num_gpus,
         logger=logger,
         callbacks=callbacks,
     )

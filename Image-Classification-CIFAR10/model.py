@@ -2,14 +2,13 @@ from pytorch_lightning import LightningModule
 from torch import nn
 from torch.optim.lr_scheduler import OneCycleLR
 import torch.nn.functional as F
-from torch.optim.swa_utils import AveragedModel, update_bn
 from torchmetrics.functional import accuracy, confusion_matrix
 from torchvision.models import resnet18
 import torch
 from hparams import config
 
-def create_model():
-    model = resnet18(pretrained=False, num_classes=10)
+def create_model(num_classes):
+    model = resnet18(pretrained=False, num_classes=num_classes)
     model.conv1 = nn.Conv2d(
         in_channels=3, out_channels=64, kernel_size=(3,3),
         stride=(1,1), padding=(1,1), bias=False)
